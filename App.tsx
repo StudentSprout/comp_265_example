@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Dropdown } from 'react-native-element-dropdown';
+import { View, Text, Button, StyleSheet, Platform } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 const WeatherApp = () => {
 
@@ -22,102 +23,120 @@ const WeatherApp = () => {
     return unit === 'C' ? tempC : (tempC * 9) / 5 + 32;
   };
 
-  const handleCityChange = (event) => {
-    setSelectedCity(event.target.value);
-  };
-
   const selectedWeather = weatherData.find((data) => data.city === selectedCity);
 
   return (
 
     <View style={styles.container}>
-      <Text style={styles.header}>Weather App</Text>
-      <Button onPress={toggleUnit} style={styles.toggleButton}>
-        Toggle to {unit === 'C' ? 'Fahrenheit' : 'Celsius'}
-      </Button>
-      <View style={styles.selectorContainer}>
-        <Text htmlFor="citySelector" style={styles.label}>
-          Select a city:
-        </Text>
-        <select
-          id="citySelector"
-          value={selectedCity}
-          onChange={handleCityChange}
-          style={styles.selector}
+    <Text style={styles.header}>Weather App</Text>
+
+    <View style={styles.pickerContainer}>
+      <Text style={styles.subheader}>Pick a City</Text>
+    <Picker
+        selectedValue={selectedCity}
+        onValueChange={(itemValue) => setSelectedCity(itemValue)}
         >
-          {weatherData.map((data, index) => ( // <Picker.Item key={index} label={data.city} value={data.city} />
-            <option key={index} value={data.city}>
-              {data.city}
-            </option>
-          ))}
-        </select>
-      </View>
+          
+            {weatherData.map((data, index) => (
+              <Picker.Item key={index} label={data.city} value={data.city} />
+            ))}
+            
+            </Picker>
+            </View>
+
       {selectedWeather ? (
         <View style={styles.weatherCard}>
           <Text style={styles.city}>{selectedWeather.city}</Text>
           <Text style={styles.condition}>{selectedWeather.condition}</Text>
-          <Text style={styles.temperature}>
-            {convertTemperature(selectedWeather.temperatureC)}°{unit}
-          </Text>
-        </View>
+          <Text style={styles.temperature}
+            {convertTemperature(selectedWeather.temperatureC).toFixed(2)}°{unit}
+          >
+          <Button title={`Toggle To ${toggleTempText}`} color="#fb8618ff" onPress={toggleUnit}}/>
+
       ) : (
         <Text style={styles.loading}>No weather data available</Text>
       )}
-    </View>
-  );
-}
 
-/*
-const styles = {
-  container: {
-    fontFamily: 'Arial, sans-serif',
-    textAlign: 'center',
-    padding: '20px',
-  },
-  header: {
-    fontSize: '2rem',
-    marginBottom: '20px',
-  },
-  toggleButton: {
-    padding: '10px 20px',
-    marginBottom: '20px',
-    cursor: 'pointer',
-  },
-  selectorContainer: {
-    marginBottom: '20px',
-  },
-  label: {
-    marginRight: '10px',
-    fontSize: '1rem',
-  },
-  selector: {
-    padding: '5px',
-    fontSize: '1rem',
-  },
-  weatherCard: {
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    padding: '15px',
-    margin: '10px auto',
-    width: '200px',
-    textAlign: 'left',
-  },
-  city: {
-    fontSize: '1.2rem',
-    fontWeight: 'bold',
-  },
-  condition: {
-    fontSize: '1rem',
-    color: '#555',
-  },
-  temperature: {
-    fontSize: '1.1rem',
-    color: '#333',
-  },
-  loading: {
-    fontSize: '1rem',
-    color: '#999',
-  },
+    </View>
+
+  );
 };
 
-export default WeatherApp; */
+const colours = {
+  bg: "#ffffff",
+  card: "#ffffff",
+  card2: "#ffffff",
+  stroke: "#ffffff",
+  text: "#ffffff",
+  subtext: "#ffffff",
+  accent: "#ffffff",
+  accent2: "#ffffff",
+};
+
+const styles =  StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: #ffffff,
+    padding: 21,
+    gap: 13,
+  },
+
+  header: {
+    fontSize: 32,
+    marginBottom: 20,
+  },
+
+  toggleButton: {
+    padding: 10,
+    marginBottom: 20,
+  },
+
+  selectorContainer: {
+    marginBottom: 20,
+  },
+
+  label: {
+    marginRight: 10,
+    fontSize: 16,
+  },
+
+  selector: {
+    padding: 5,
+    fontSize: 16,
+  },
+
+  weatherCard: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 15,
+    margin: 10,
+    width: 200,
+  },
+
+  city: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+
+  condition: {
+    fontSize: 16,
+    color: '#555',
+  },
+
+  temperature: {
+    fontSize: 18,
+    color: '#333',
+  },
+
+  loading: {
+    fontSize: 16,
+    color: '#999',
+  },
+
+  picker: {
+    fontSize: 20,
+  }
+});
+
+export default WeatherApp;
