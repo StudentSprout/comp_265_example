@@ -51,8 +51,7 @@ const WeatherApp = () => {
           <Text style={styles.temperature}
             {convertTemperature(selectedWeather.temperatureC).toFixed(2)}°{unit}
           >
-          <Button title={`Toggle To ${toggleTempText}`} color="#fb8618ff" onPress={toggleUnit}}/>
-
+          <Button title={`Toggle To ${toggleTempText}`} color="#fb8618ff" onPress={toggleUnit}}>
       ) : (
         <Text style={styles.loading}>No weather data available</Text>
       )}
@@ -63,14 +62,14 @@ const WeatherApp = () => {
 };
 
 const colours = {
-  bg: "#ffffff",
-  card: "#ffffff",
-  card2: "#ffffff",
-  stroke: "#ffffff",
-  text: "#ffffff",
-  subtext: "#ffffff",
-  accent: "#ffffff",
-  accent2: "#ffffff",
+  bg: '#ffffff',
+  card: '#ffffff',
+  card2: '#ffffff',
+  stroke: '#ffffff',
+  text: '#ffffff',
+  subtext: '#ffffff',
+  accent: '#ffffff',
+  accent2: '#ffffff',
 };
 
 const styles =  StyleSheet.create({
